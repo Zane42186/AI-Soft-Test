@@ -1,0 +1,24 @@
+{
+  "description": "AI Soft Test — 项目级权限与钩子配置。所有设置仅对当前项目生效。",
+  "allowed_openai_params": [
+    "thinking",
+    "context_management"
+  ],
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "deepseek-v4-flash",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "deepseek-v4-pro"
+  },
+  "includeCoAuthoredBy": false,
+  "litellm_settings": {
+    "drop_params": true
+  },
+  "permissions": {
+    "allow": [],
+    "deny": []
+  },
+  "hooks": {}
+}

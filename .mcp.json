@@ -1,0 +1,4 @@
+{
+  "description": "AI Soft Test 项目的 MCP (Model Context Protocol) 服务器配置。仅在当前项目中生效。",
+  "mcpServers": {}
+}
