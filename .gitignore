@@ -28,3 +28,6 @@
 *.tmp
 *.swp
 .cache/
+
+# 忽略：Office 临时锁文件
+~$*
