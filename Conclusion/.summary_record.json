@@ -1,10 +1,10 @@
 ﻿{
-  "version": "1.0",
-  "currentConversationId": "session-codex-20260709-001",
-  "lastConversationId": "session-codex-20260709-001",
-  "lastMessageIndex": 21,
-  "maxFileNumber": 12,
-  "lastSummaryFile": "012总结.md",
-  "lastSummaryTime": "2026-07-09T15:30:00",
-  "totalSummariesInConversation": 3
+    "version":  "1.0",
+    "currentConversationId":  "session-codex-20260709-001",
+    "lastConversationId":  "session-codex-20260709-001",
+    "lastMessageIndex":  23,
+    "maxFileNumber":  13,
+    "lastSummaryFile":  "013总结.md",
+    "lastSummaryTime":  "2026-07-09T18:47:24",
+    "totalSummariesInConversation":  4
 }
