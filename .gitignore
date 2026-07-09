@@ -1,4 +1,4 @@
-# 忽略：个人本地配置文件（含密钥/本地路径）
+﻿# 个人本地配置文件（含密钥/本地路径）
 .claude/settings.local.json
 
 # 忽略：IDE 锁文件（运行时生成）
@@ -23,6 +23,16 @@
 # 忽略：历史记录
 .claude/history.jsonl
 .claude/.last-cleanup
+
+# Codex 运行时文件
+.agents/sessions/
+.agents/session-env/
+.agents/projects/
+.agents/history.jsonl
+.agents/.last-cleanup
+.agents/daemon/
+.agents/backups/
+.agents/telemetry/
 
 # 忽略：临时/缓存文件
 *.tmp
