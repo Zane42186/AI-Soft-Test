@@ -17,7 +17,7 @@
 ## 学习进度
 
 - 功能测试：Day 1-4 ✅ 已完成
-- Linux 基础：Day 6 进行中
+- Linux 基础：Day 6-7 进行中
 - MySQL：待启动
 - Python 基础：待启动
 - 接口测试与 JMeter：待启动

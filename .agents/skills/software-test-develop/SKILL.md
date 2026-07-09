@@ -1,7 +1,7 @@
----
+﻿---
 name: software-test-develop
 description: 软件测试开发综合学习助手，覆盖功能测试、Linux基础、MySQL、Python基础、接口测试与Jmeter、性能测试、接口自动化七大模块
-allowed-tools: Read, Write, Bash(grep *), Bash(find *), Bash(python3 --version), Bash(pip3 list), Bash(/usr/bin/mysql --version), Bash(/bin/bash -c "echo ok")
+allowed-tools: Read, Write, Bash(grep *), Bash(find *), Bash(python3 --version), Bash(pip3 list)
 ---
 
 # 软件测试开发综合学习助手
