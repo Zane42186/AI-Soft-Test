@@ -2,9 +2,9 @@
   "version": "1.0",
   "currentConversationId": "session-20260708-001",
   "lastConversationId": "session-20260708-001",
-  "lastMessageIndex": 4,
-  "maxFileNumber": 9,
-  "lastSummaryFile": "009总结.md",
-  "lastSummaryTime": "2026-07-08T22:00:00",
-  "totalSummariesInConversation": 2
+  "lastMessageIndex": 9,
+  "maxFileNumber": 10,
+  "lastSummaryFile": "010总结.md",
+  "lastSummaryTime": "2026-07-09T20:30:00",
+  "totalSummariesInConversation": 3
 }
