@@ -924,3 +924,652 @@ grep -c "true" results.jtl | awk '{print "成功数:", $1}'
 ---
 
 > ✨ **第七天的核心心法**：不要试图一次记住所有参数。记住 **`grep` 找、`sed` 改、`awk` 算** 九个字，具体用法碰到了 `--help` 就行。三剑客的真正威力不在单个命令，而在**管道组合**——就像乐高积木，单个只是一块塑料，拼在一起才是一座城堡。
+
+---
+
+# 第八天：权限深入 + 进程管理 + 网络工具
+
+> 🎯 **Day 8 目标**：掌握测试工程师上服务器排查"服务为什么挂了"的三大必备技能包——**权限**（为什么脚本执行不了）、**进程**（应用还在不在运行）、**网络**（端口通不通）。
+
+---
+
+## 第一部分：文件权限深入
+
+### 1.1 复习：rwx 权限模型
+
+第六天我们学过，`ls -l` 输出的权限字符串长这样：
+
+```
+-rwxr-xr--  1 user group  4096 Jul 11 10:00 script.sh
+│└─┬─┘└─┬─┘└─┬─┘
+│  │    │    └── 其他人(r--)：只能读
+│  │    └─────── 所属组(r-x)：读+执行
+│  └──────────── 所有者(rwx)：读+写+执行
+└─────────────── 文件类型(- = 普通文件, d = 目录, l = 软链接)
+```
+
+三个权限位永远按 **r → w → x** 顺序排列，有权限显示字母，无权限显示 `-`。
+
+### 1.2 数字表示法（八进制权限）
+
+这是今天的重点——**数字表示法是生产环境的标准语言**，面试必考。
+
+#### 核心规则：r=4, w=2, x=1
+
+| 权限组合 | 二进制思维 | 数字值 | 含义 |
+|----------|-----------|--------|------|
+| `---` | 0+0+0 | **0** | 无任何权限 |
+| `--x` | 0+0+1 | **1** | 仅执行 |
+| `-w-` | 0+2+0 | **2** | 仅写入 |
+| `-wx` | 0+2+1 | **3** | 写+执行 |
+| `r--` | 4+0+0 | **4** | 仅读取 |
+| `r-x` | 4+0+1 | **5** | 读+执行 |
+| `rw-` | 4+2+0 | **6** | 读+写 |
+| `rwx` | 4+2+1 | **7** | 全部权限 |
+
+> 🧠 **记忆口诀**：读=4、写=2、执行=1。想不出某个权限是多少时，在心里做加法——例如 `r-x` = 读(4) + 执行(1) = 5。
+
+#### 三位数字分别代表：所有者 | 所属组 | 其他人
+
+```bash
+# 例：chmod 755 script.sh
+#      │└┤└┤
+#      │ │ └── 其他人 = 5 = r-x（读+执行）
+#      │ └──── 所属组 = 5 = r-x（读+执行）
+#      └────── 所有者 = 7 = rwx（全部权限）
+```
+
+### 1.3 生产环境最常见的四种权限
+
+| 数字 | 权限字符串 | 适用场景 | 为什么 |
+|------|-----------|----------|--------|
+| **755** | `rwxr-xr-x` | 目录、可执行脚本 | 自己可以改，别人只能看+跑 |
+| **644** | `rw-r--r--` | 普通配置文件 | 自己可改，别人只能看 |
+| **700** | `rwx------` | 私密脚本/SSH 密钥目录 | 只允许自己访问 |
+| **600** | `rw-------` | SSH 私钥、敏感配置文件 | 只允许自己读写 |
+
+> ⚠️ **生产红线**：**永远不要用 `chmod 777`**！777 = 所有人都能读写执行，等于把服务器大门敞开。如果网上教程让你 `chmod 777` 解决权限问题——它在教你走捷径，不是正确方案。
+
+### 1.4 chmod 实战
+
+```bash
+# ===== 数字模式（推荐，一步到位） =====
+chmod 755 script.sh          # 设为 rwxr-xr-x
+chmod 644 config.ini         # 设为 rw-r--r--
+chmod 600 ~/.ssh/id_rsa      # 私钥必须 600，否则 SSH 拒绝连接
+
+# ===== 符号模式（精细调整） =====
+chmod u+x script.sh          # 给所有者(u)加执行权限(+x)
+chmod go-w file.txt          # 去掉组(g)和其他人(o)的写权限(-w)
+chmod a+r file.txt           # 所有人(a)加读权限(+r)
+chmod o= config.ini          # 清空其他人的所有权限
+
+# ===== 递归修改（危险！慎用） =====
+chmod -R 755 project/        # 递归修改目录下所有文件/子目录
+# ⚠️ -R 要小心：目录需要 x 才能进入，普通文件一般不需要 x
+
+# 推荐用下面这个命令区分目录和文件：
+find project/ -type d -exec chmod 755 {} \;    # 目录 755
+find project/ -type f -exec chmod 644 {} \;    # 文件 644
+```
+
+#### 用户/组/其他人的字母代号
+
+| 字母 | 含义 | 示例 |
+|------|------|------|
+| `u` | user（所有者） | `u+x` — 所有者加执行 |
+| `g` | group（所属组） | `g-w` — 组去写权限 |
+| `o` | others（其他人） | `o=` — 清空其他人权限 |
+| `a` | all（全部三类） | `a+r` — 所有人加读权限 |
+
+### 1.5 chown / chgrp — 修改文件归属
+
+```bash
+# chown = Change Owner，修改所有者（和所属组）
+chown user1 file.txt                    # 所有者改为 user1
+chown user1:group1 file.txt             # 所有者改为 user1，组改为 group1
+chown -R www-data:www-data /var/www/    # 递归修改（Web 服务器常用）
+
+# chgrp = Change Group，只修改所属组
+chgrp devops file.txt                   # 所属组改为 devops
+
+# 查看当前用户和组
+whoami                                   # 我是谁
+groups                                   # 我在哪些组
+id                                       # 详细信息（uid/gid/所有组）
+```
+
+#### 🧪 测试场景：部署脚本权限排查
+
+模拟一次典型的部署故障排查过程：
+
+```bash
+# 场景：开发说"部署后脚本执行不了"
+# Step 1：看权限
+ls -l /opt/app/start.sh
+# 输出：-rw-r--r--  1 root root  120 Jul 11 10:00 start.sh
+#               ↑ 没有 x！所有人只有 r--
+
+# Step 2：看所有者
+# 应用是 www-data 用户跑的，但文件属于 root
+# Step 3：修复
+sudo chown www-data:www-data /opt/app/start.sh    # 改归属
+sudo chmod 755 /opt/app/start.sh                  # 加执行权限
+
+# Step 4：验证
+ls -l /opt/app/start.sh
+# 输出：-rwxr-xr-x  1 www-data www-data  120 Jul 11 10:00 start.sh
+#               ↑ 修复完成
+```
+
+> 💡 **测试工程师的权限排查三问**：① 文件有没有执行权限（x）？② 文件属于谁（用应用用户还是 root）？③ 目录有没有进入权限（目录也需要 x 才能 cd 进去）？
+
+### 1.6 umask — 新建文件的默认权限
+
+```bash
+umask          # 查看当前掩码，通常是 0022 或 0002
+# 简单理解：umask 022 意味着新建文件默认 644 (666-022)，新建目录默认 755 (777-022)
+```
+
+> 这部分了解即可，运维面试偶尔会问。测试工程师不需要改 umask。
+
+---
+
+## 第二部分：进程管理
+
+> 🎯 测试工程师的核心场景：**"帮我看一下 XX 服务还在不在运行"** / **"有个进程卡死了，帮我杀掉"**
+
+### 2.1 ps — 查看进程快照
+
+```bash
+# ===== 最常用：ps aux（BSD 风格，无横杠） =====
+ps aux              # 显示所有用户的所有进程
+# 输出列：
+# USER   PID  %CPU %MEM    VSZ   RSS TTY   STAT START   TIME COMMAND
+# root     1   0.0  0.1 168196 13344 ?     Ss   09:00   0:01 /sbin/init
+# 关键列：PID(进程ID)、%CPU、%MEM、STAT(状态)、COMMAND(命令)
+
+# ===== ps -ef（Unix 风格，带横杠） =====
+ps -ef              # 另一种常用格式，显示 PPID（父进程ID）
+
+# ===== 过滤特定进程 =====
+ps aux | grep nginx          # 查找 nginx 进程
+ps aux | grep java            # 查找 Java 应用
+ps -u www-data                # 查看指定用户的进程
+
+# ===== 只看 PID 和命令 =====
+ps -eo pid,comm               # 自定义输出列
+```
+
+#### 进程状态（STAT 列）速查
+
+| 状态 | 含义 | 测试要关心的 |
+|------|------|-------------|
+| `S` | Sleeping（睡眠中，等待事件） | ✅ 正常——大多数进程都是这个状态 |
+| `R` | Running（正在运行或在队列中） | ✅ 正常 |
+| `D` | 不可中断睡眠（等 I/O） | ⚠️ 短暂出现正常，长时间=磁盘可能有问题 |
+| `Z` | Zombie（僵尸进程） | 🔴 **需关注**——进程已死但父进程没回收 |
+| `T` | Stopped（被暂停） | ⚠️ 可能是被 `Ctrl+Z` 挂起了 |
+| `<` | 高优先级 | ℹ️ 了解即可 |
+| `N` | 低优先级 | ℹ️ 了解即可 |
+| `+` | 前台进程组 | ℹ️ 了解即可 |
+
+### 2.2 top — 实时进程监控
+
+```bash
+top                 # 启动实时监控（按 q 退出）
+
+# 常用交互按键（在 top 界面内按）：
+#   1         — 查看每个 CPU 核心的使用率
+#   M         — 按内存使用排序（大写 M）
+#   P         — 按 CPU 使用排序（大写 P）
+#   k         — 杀死进程（输入 PID + 信号）
+#   q         — 退出
+
+# htop（更友好的替代品，需单独安装）
+htop                # 彩色界面，鼠标可点击，比 top 直观
+```
+
+#### top 上半部分信息解读
+
+```
+top - 14:30:15 up 30 days,  2:15,  2 users,  load average: 0.15, 0.20, 0.18
+#     ↑ 当前时间  ↑ 运行30天  ↑2个在线  ↑ 1分钟/5分钟/15分钟平均负载
+#     load average < CPU 核心数 = 正常；持续 > CPU 核心数 = 系统繁忙
+
+Tasks: 156 total,   1 running, 155 sleeping,   0 stopped,   0 zombie
+#       ↑ 总进程   ↑ 运行中     ↑ 睡眠中      ↑ 暂停       ↑ 僵尸
+#       zombie 数量 > 0 → 需要排查
+
+%Cpu(s):  2.5 us,  1.0 sy,  0.0 ni, 96.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+#         ↑用户态  ↑内核态           ↑空闲    ↑等IO           ↑虚拟机偷取
+#         us 高=应用忙  sy 高=系统调用多  wa 高=磁盘IO瓶颈  id ~0=CPU打满
+
+MiB Mem :  15892.1 total,   3210.5 free,   8760.2 used,   3921.4 buff/cache
+MiB Swap:   2048.0 total,   1800.5 free,    247.5 used.   6500.1 avail Mem
+#         ↑总内存              ↑真实空闲              ↑交换分区使用
+#         swap used 很高 = 内存不够用了，进程在"以空间换时间"
+```
+
+> 💡 **测试工程师看 top 的三步法**：① 看 load average 是否飙升；② 看 CPU 或 Memory 谁最高是哪个进程；③ 看有没有 zombie（僵尸进程）。
+
+### 2.3 kill — 终止进程
+
+```bash
+# kill 本质是"发信号"，不是"杀死"——不同的信号有不同的含义
+kill PID                # 默认发 -15 (SIGTERM)，礼貌地请进程退出
+kill -9 PID             # 强制杀 (SIGKILL)，不给进程清理的机会
+kill -l                 # 查看所有信号列表
+
+# ===== 常用信号 =====
+# -1  (SIGHUP)   — 重新加载配置文件（不重启进程）
+# -2  (SIGINT)   — 等同于 Ctrl+C，中断前台进程
+# -9  (SIGKILL)  — 强制终止（最后手段，进程无法捕获此信号）
+# -15 (SIGTERM)  — 优雅终止（默认，给进程机会清理资源）
+# -19 (SIGSTOP)  — 暂停进程
+# -18 (SIGCONT)  — 恢复暂停的进程
+
+# ===== 按名称杀进程 =====
+pkill nginx                     # 按名字杀
+pkill -f "python app.py"        # 匹配完整命令行
+killall java                    # 杀所有同名进程（小心！）
+
+# ===== 查找并杀死（组合技） =====
+ps aux | grep "redis" | grep -v grep | awk '{print $2}' | xargs kill
+#  ↑找redis  ↑排除grep自己   ↑提取PID            ↑逐个杀
+#  ps aux | grep redis | awk '{print $2}' | xargs kill -9  # 强制版
+```
+
+> ⚠️ **信号使用原则**：先用 `-15`（优雅），不响应再用 `-9`（强制）。`kill -9` 就像拔电源——进程来不及保存数据、关闭网络连接。
+
+### 2.4 前后台切换
+
+```bash
+# ===== 前台 → 后台 =====
+sleep 300           # 前台运行，终端被占用 300 秒
+# 按 Ctrl+Z          # 暂停并放到后台
+bg                  # 让它在后台继续运行
+
+# ===== 直接后台启动 =====
+sleep 300 &         # 末尾加 & = 后台运行
+# 输出：[1] 12345   ← [作业号] PID
+
+# ===== 查看后台任务 =====
+jobs                # 查看当前终端的后台任务
+# [1]+ Running   sleep 300 &
+# [2]- Stopped    python app.py   (被 Ctrl+Z 暂停的)
+
+# ===== 后台 → 前台 =====
+c                  # 把最近的后台任务切回前台
+fg %1               # 把作业号 1 切回前台
+fg 12345            # 把 PID 12345 切回前台
+```
+
+### 2.5 nohup — 终端关了也不停
+
+```bash
+# 问题：SSH 连接断开后，通过 & 启动的后台进程也会被杀
+# 解决：nohup = No Hang Up，免疫 SIGHUP 信号
+
+nohup python app.py &          # 后台运行，断开SSH也不停
+nohup python app.py > app.log 2>&1 &  # 同时重定向输出到日志
+
+# 输出默认写入 nohup.out，可以用 tail -f 查看
+tail -f nohup.out
+```
+
+#### 🧪 测试场景：排查"应用挂了没"
+
+```bash
+# Step 1：应用在不在？
+ps aux | grep "app.py" | grep -v grep
+# 有输出 → 在；无输出 → 挂了或没启动
+
+# Step 2：如果在但没响应 → 看是否变僵尸了
+ps aux | grep "app.py"
+# STAT 列如果是 Z → 僵尸进程，父进程可能有问题
+
+# Step 3：看资源占用（是不是内存泄漏导致OOM）
+top -p PID          # 只看指定进程
+# 观察 %MEM 是否随时间持续增长
+
+# Step 4：看进程在监听哪个端口（结合网络工具）
+netstat -tlnp | grep PID
+```
+
+---
+
+## 第三部分：网络工具
+
+> 🎯 测试工程师的核心场景：**"这个接口通不通？"** / **"端口被谁占了？"** / **"远程服务在不在？"**
+
+### 3.1 ping — 网络连通性
+
+```bash
+ping 8.8.8.8                        # 持续 ping（按 Ctrl+C 停止）
+ping -c 4 192.168.1.1               # 只发 4 个包
+ping -c 4 google.com                # 域名也可以（测试 DNS 是否正常）
+
+# 输出解读：
+# 64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=12.3 ms
+#                                    ↑TTL=跳数  ↑延迟
+# 
+# --- 8.8.8.8 ping statistics ---
+# 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+#                              ↑丢包率 = 0% ✅
+# 丢包率 > 0% → 网络不稳定
+# 丢包率 = 100% → 不通（目标不可达/防火墙拦截/对方禁 ping）
+```
+
+> ⚠️ **ping 不通 ≠ 服务不可用**：很多服务器禁用了 ICMP（ping 协议），但 HTTP/HTTPS 端口是通的。所以排查网络问题时，ping 只是第一步。
+
+### 3.2 curl — HTTP 接口测试利器
+
+这是测试工程师**每天都会用到**的命令。
+
+```bash
+# ===== GET 请求 =====
+curl https://api.example.com/health          # 输出响应体
+curl -I https://api.example.com              # 只看响应头（HEAD 请求）
+curl -v https://api.example.com/health       # 详细模式（看请求/响应全过程）
+curl -o /dev/null -s -w "%{http_code}" https://api.example.com
+#   ↑不保存内容  ↑静默  ↑输出HTTP状态码：返回 200 200 或 503
+
+# ===== POST 请求 =====
+curl -X POST https://api.example.com/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"123456"}'
+#   -X  指定方法（GET/POST/PUT/DELETE）
+#   -H  加请求头
+#   -d  请求体数据
+
+# ===== 常用组合 =====
+curl -X POST http://localhost:8080/api/user \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer token123" \
+  -d '{"name":"张三","age":25}'
+
+# ===== 测试场景：快速判断服务是否正常 =====
+curl -s -o /dev/null -w "HTTP状态码: %{http_code}\n响应时间: %{time_total}s\n" \
+  http://localhost:8080/health
+# 输出：HTTP状态码: 200
+#       响应时间: 0.023s
+
+# ===== 下载文件 =====
+curl -O https://example.com/file.tar.gz     # 保存为原文件名
+curl -o myfile.tar.gz https://example.com/file.tar.gz  # 自定义文件名
+```
+
+#### curl 常用选项速查
+
+| 选项 | 含义 | 测试场景 |
+|------|------|----------|
+| `-I` | 只获取响应头 | 快速确认服务是否在运行 |
+| `-v` | 详细模式 | 调试 SSL/TLS 握手、看完整交互 |
+| `-s` | 静默模式 | 脚本中使用 |
+| `-o` | 输出到文件 | 下载文件 |
+| `-w` | 自定义输出格式 | 提取 HTTP 状态码、响应时间 |
+| `-X` | 指定 HTTP 方法 | GET/POST/PUT/DELETE |
+| `-H` | 添加请求头 | Content-Type、Authorization |
+| `-d` | POST 请求体 | 提交 JSON/表单数据 |
+| `-k` | 跳过 SSL 证书验证 | 测试自签名证书的环境 |
+| `-L` | 跟随重定向 | 301/302 自动跳转 |
+
+### 3.3 netstat / ss — 查看端口占用
+
+```bash
+# netstat（传统工具，输出更详细）和 ss（现代工具，更快）
+
+# ===== netstat 常用组合 =====
+netstat -tlnp            # 只看 TCP 监听端口 + 不解析域名 + 显示进程
+# -t TCP  -u UDP  -l 监听中的  -n 数字格式(不解析)  -p 显示进程
+# Proto Local Address      State       PID/Program
+# tcp    0.0.0.0:8080      LISTEN      12345/java
+# tcp    127.0.0.1:3306    LISTEN      6789/mysqld
+# ↑              ↑端口号    ↑LISTEN=正在监听
+
+netstat -an | grep 8080   # 看某个端口的全部连接（含已建立的）
+# ESTABLISHED = 连接已建立（有人正在用）
+# TIME_WAIT   = 连接关闭后的等待期（大量出现说明短连接频繁）
+# LISTEN       = 正在监听
+
+# ===== ss（推荐，速度更快） =====
+ss -tlnp                  # 等同于 netstat -tlnp，但速度更快
+ss -s                     # 统计摘要
+
+# ===== 找出谁占用了端口（高频操作）=====
+lsof -i :8080             # 查看 8080 端口被哪个进程占用
+# 或者
+ss -tlnp | grep :8080
+```
+
+> 💡 **`127.0.0.1:3306` vs `0.0.0.0:8080`**：127.0.0.1 = 只能本机访问（安全），0.0.0.0 = 所有网络接口都可访问（对外暴露）。MySQL 默认只监听 127.0.0.1 就是为了安全。
+
+#### 🧪 测试场景：排查"服务为什么挂了"
+
+模拟一个完整的故障排查过程：
+
+```bash
+# ==== 场景：开发说 API 服务连不上 ====
+
+# Step 1：主机通不通？
+ping -c 2 192.168.1.100
+# 通 → 网络层 OK，往下查端口
+
+# Step 2：进程在不在？
+ssh user@192.168.1.100 "ps aux | grep java | grep -v grep"
+# 不在 → 确认服务挂了，通知运维重启
+# 在   → 往下查端口
+
+# Step 3：端口有没有在监听？
+ssh user@192.168.1.100 "ss -tlnp | grep :8080"
+# 无输出      → 进程在但端口没开，可能配置错误或启动失败
+# LISTEN      → 端口开着，往下查应用层
+
+# Step 4：直接请求接口试一下
+curl -v http://192.168.1.100:8080/health
+# 200 正常    → 可能是客户端网络/DNS 问题
+# 503/超时    → 服务有问题或有防火墙拦截
+# Connection refused → 端口没开（回到 Step 3）
+
+# Step 5：看最近日志找原因
+ssh user@192.168.1.100 "tail -100 /var/log/app/error.log | grep -B 2 -A 2 'ERROR\|FATAL\|Exception'"
+```
+
+> 📌 **排查顺序口诀**：**先 ping 通，再看进程，三查端口，四 curl 请求。** 不要跳过前面直接查后面的——每一步排除一层，才能准确定位问题。
+
+---
+
+## 📝 第八天课后练习
+
+### 练习一：权限计算（5 题）
+
+1. `rwxr-xr--` 对应的数字权限是多少？
+   chmod 754 ...
+2. `chmod 644` 后，**其他人**对这个文件有什么权限？
+   可读
+3. 一个脚本需要"所有者能读写执行、同组人能读执行、其他人无任何权限"，用数字表示法怎么写？
+   750
+4. 以下操作哪里有问题？`chmod 777 /etc/passwd`
+   /etc目录下都是一些很重要的配置文件，passwd存放用户信息的文件，非常重要，除了对于所有者其他的人权限不应该给太高，否则具有很大的权限安全等风险
+5. 部署了一个 Web 应用，目录结构如下，应该用什么命令修复权限？
+   ```
+   drw-r--r--  root root  /opt/webapp/    （目录，其他人进不去）
+   -rw-r--r--  root root  /opt/webapp/index.html		
+   
+   
+   chmod a+x /opt/webapp
+   ```
+
+### 练习二：进程管理（5 题）
+
+1. 如何查看系统中所有包含 "nginx" 的进程？
+   ps aux | grep "nginx" | grep -v grep
+2. 有一个进程 PID=9527 卡死无响应，如何优雅地终止它？如果优雅终止无效呢？
+
+   1. kill -15 9527
+   2. ·`终止无效`： kill -9 9527
+3. 启动一个后台任务 `python test_server.py &` 后，如何把它调回前台？
+
+   1. fg
+4. 如何让一个命令在终端关闭后仍然运行？（写出完整命令）
+   nohup python app.py &
+5. 以下 top 输出中有什么问题需要关注？
+   ```
+   load average: 8.50, 7.20, 6.80  （机器是 4 核）
+   Tasks: 200 total, 1 running, 195 sleeping, 0 stopped, 4 zombie
+   
+   当前一分钟负载8.5核，5分钟7.2核，15分钟平均负载6.8核，CPU 严重打满，大量进程等待调度；近 15 分钟负载持续 6.8 以上，长期高负载。
+   Tasks : 总共200个进程 1个正在运行 195个处于睡眠 0个暂停 4个僵尸进程 需关注4个僵尸进程已死但父进程没回收
+   ```
+
+### 练习三：网络工具（4 题）
+
+1. 如何快速确认 `http://192.168.1.100:8080/api/health` 接口是否可访问，并只获取 HTTP 状态码？
+   curl -I http://192.168.1.100:8080/api/health 
+2. 启动 Java 应用时提示 "端口 8080 已被占用"，用什么命令找出是谁占的？
+   ss -tulnp | grep "8080"
+3. ping 某个服务器 100% 丢包，但 curl 能正常访问该服务器的 Web 页面，为什么？
+   ping 和网页走不同协议，网络设备可以单独拦截 ICMP 而放行 TCP，因此出现 ping 100% 丢包但 Web 访问正常。
+4. 写出排查"API 服务连不上"的完整命令序列（从网络层到应用层）。
+
+```
+# Step 1：主机通不通？
+ping 192.168.200.1
+# Step 2：进程在不在？
+ssh user@192.168.200.1 不在找运维
+在 -> 查进程端口 ps -aux | grep java | grep -v grep
+# Step 3：端口有没有在监听？
+ssh user@192.168.200.1 先测连通
+ss -tlnp | grep "8080"
+# Step 4：直接请求接口试一下
+curl -v http://192.168.200.1:8080/health
+200 能请求成功，可能是网络或者dns的问题
+503 服务停机、过载、维护中找运维
+# Connection refused → 端口没开（回到 Step 3）
+# Step 5：看最近日志找原因
+ssh user@192.168.200.1 
+tail -n 100 /var/log/app/app.log | grep -C 2 "ERROR\|FATAL\|Exception"
+```
+
+
+
+### 练习四：综合排查（2 题）
+
+1. 开发说"部署后脚本执行不了"，请写出完整的排查命令序列（权限 + 归属角度）。
+   1. ls -al run.sh
+   2. 查看文件是否具有x权限
+   3. 不具有 chmod 755 run.sh
+   4. 具有权限 ：查看开发用户所属组是否在组内，不在usermod -aG group1 user1
+   
+   ``` 
+   1. ls -l run.sh 看所有者和权限
+   2. 如果所有者不对 → `chown 应用用户:应用组 run.sh`（这是教材重点！）
+   3. 如果权限缺 x → `chmod 755 run.sh`
+   4. 验证：`ls -l run.sh` 确认修复成功
+   ```
+   
+   ```
+   # Step 1: 看权限+归属
+   ls -la /opt/app/run.sh
+   # Step 2: 改归属（如需要）
+   sudo chown www-user:www-group /opt/app/run.sh
+   # Step 3: 加执行权限
+   sudo chmod 755 /opt/app/run.sh
+   # Step 4: 也检查目录权限
+   ls -ld /opt/app/
+   # Step 5: 验证
+   sudo -u www-user /opt/app/run.sh
+   ```
+   
+   
+   
+2. 生产环境 `app.log` 中发现大量 "OutOfMemoryError"，请写出 3 条命令来了解当前系统状态。
+   1. ps -aux | grep java
+   2. top
+   3. htop
+   4. `free -h`（看内存使用情况，OOM 的核心指标）
+   5.  `dmesg \| tail -50 \| grep -i oom`（看 OOM Killer 有没有杀进程）。
+
+---
+
+## 📋 第八天自检清单
+
+完成学习后，确认以下知识点：
+
+- [ ] 能脱口而出 755、644、700、600 分别对应什么权限字符串
+  rwxr-xr-x rw-r--r-- rwx------ rw-------
+
+- [ ] 知道 `chmod u+x` 和 `chmod 755` 的区别（符号 vs 数字）
+
+  1. 给当前文件的执行权限添加给所有者
+  2. 把当前文件的权限设置为rwxr-xr-x
+
+- [ ] 知道 `chown` 和 `chmod` 分别改什么（归属 vs 权限）
+  更改所属人和组 更改文件权限
+
+- [ ] 能用 `ps aux | grep xxx` 查找进程
+
+- [ ] 能读懂 top 的 load average 和 zombie 数
+  平均负载 和 僵尸进程
+
+- [ ] 知道 `kill` 和 `kill -9` 的区别（优雅 vs 强制）
+
+- [ ] 知道 `&` 和 `nohup` 的区别（普通后台 vs 免疫 HUP）
+
+- [ ] 能用 `curl -X POST -H -d` 发一个 JSON 请求
+
+  curl -X POST https://api.example.com/login \
+    -H "Content-Type: application/json" \
+    -d '{"username":"admin","password":"123456"}'
+
+- [ ] 能用 `ss -tlnp` 或 `lsof -i :端口` 查端口占用
+
+- [ ] 能独立完成"ping → ps → ss → curl"四步排查链路
+
+---
+
+## 🔜 下一天预告
+
+**第九天：Shell 脚本入门**
+
+掌握了这么多命令后，第九天将学习如何把它们写成脚本：
+- 变量、条件判断（`if`/`case`）、循环（`for`/`while`）
+- 函数定义与调用
+- 脚本参数（`$1`/`$2`/`$@`）
+- 退出码与错误处理（`$?`、`set -e`）
+- 实战：写一个服务健康检查脚本
+
+---
+
+> ✨ **第八天的核心心法**：权限、进程、网络是测试工程师登录服务器的 **"三把刀"**。权限解决"能不能做"，进程解决"还在不在做"，网络解决"通不通"。三个维度交叉验证，才能准确定位"服务为什么挂了"。
+
+---
+
+## 📚 命令速查表（Day 6~8 汇总）
+
+### 权限相关
+| 命令 | 用途 | 常用示例 |
+|------|------|----------|
+| `chmod 755 file` | 数字法改权限 | rwxr-xr-x |
+| `chmod u+x file` | 符号法加执行 | 给所有者 +x |
+| `chown user:group file` | 改所有者+组 | 部署后改归属 |
+| `ls -l` | 查看权限 | 每个文件都先看这个 |
+
+### 进程相关
+| 命令 | 用途 | 常用示例 |
+|------|------|----------|
+| `ps aux` | 查看所有进程 | `ps aux \| grep nginx` |
+| `top` | 实时监控 | 按 M(内存)/P(CPU)/q(退出) |
+| `kill PID` | 优雅终止 | 默认 -15 |
+| `kill -9 PID` | 强制终止 | 最后手段 |
+| `nohup cmd &` | 后台不中断 | SSH 断开也不停 |
+
+### 网络相关
+| 命令 | 用途 | 常用示例 |
+|------|------|----------|
+| `ping -c 4 host` | 测连通性 | 第一步排查 |
+| `curl -I url` | 看响应头 | 快速确认服务 |
+| `curl -X POST -H -d` | 发请求 | 接口测试 |
+| `ss -tlnp` | 查看监听端口 | 找端口占用 |
+| `lsof -i :8080`= ss -tlnp \| grep 8080 | 谁占了这个端口 | 端口冲突排查 |
