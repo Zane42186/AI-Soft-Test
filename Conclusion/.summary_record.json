@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "currentConversationId": "session-20260708-001",
+  "currentConversationId": "session-20260812-001",
   "lastConversationId": "session-20260708-001",
-  "lastMessageIndex": 11,
-  "maxFileNumber": 11,
-  "lastSummaryFile": "011总结.md",
-  "lastSummaryTime": "2026-07-12T12:00:00",
-  "totalSummariesInConversation": 4
+  "lastMessageIndex": 7,
+  "maxFileNumber": 12,
+  "lastSummaryFile": "012总结.md",
+  "lastSummaryTime": "2026-08-12T12:00:00",
+  "totalSummariesInConversation": 1
 }

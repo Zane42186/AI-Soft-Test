@@ -1,6 +1,6 @@
-# 第六天：Linux 基础入门（一）— 文件系统与基本操作
+# 第一天：Linux 基础入门（一）— 文件系统与基本操作
 
-> 📅 学习日期：第六天 | 🎯 模块：Linux 基础 | ⏱️ 建议学习时长：2-3 小时
+> 📅 学习日期：第一天 | 🎯 模块：Linux 基础 | ⏱️ 建议学习时长：2-3 小时
 
 ---
 
@@ -426,7 +426,7 @@ drwxr-x--- 2 zane dev 4096 Jun 19 16:00 logs
 
 ---
 
-## 📋 第六天自检清单
+## 📋 第一天自检清单
 
 完成学习后，确认以下知识点：
 
@@ -456,7 +456,7 @@ drwxr-x--- 2 zane dev 4096 Jun 19 16:00 logs
 
 ## 🔜 下一天预告
 
-**第七天：文本处理三剑客（grep / awk / sed）**
+**第二天：文本处理三剑客（grep / awk / sed）**
 
 这是 Linux 学习中**最重要的三个命令**——掌握了它们，你就能从海量日志中快速提取有用信息。这也是测试面试中 Linux 部分的高频考点。
 
@@ -466,19 +466,19 @@ drwxr-x--- 2 zane dev 4096 Jun 19 16:00 logs
 
 ---
 
-> ✨ **第六天的核心心法**：Linux 不是用来"学"的，是用来"用"的。每个命令都要在终端里敲一遍。今天学完 `tail -f`，明天就找个真实日志试一试。**肌肉记忆比大脑记忆更可靠。**
+> ✨ **第一天的核心心法**：Linux 不是用来"学"的，是用来"用"的。每个命令都要在终端里敲一遍。今天学完 `tail -f`，明天就找个真实日志试一试。**肌肉记忆比大脑记忆更可靠。**
 
 ---
 
-# 第七天：文本处理三剑客 — grep / sed / awk
+# 第二天：文本处理三剑客 — grep / sed / awk
 
-> 📅 学习日期：第七天 | 🎯 模块：Linux 基础 → 文本处理 | ⏱️ 建议学习时长：2-3 小时
+> 📅 学习日期：第二天 | 🎯 模块：Linux 基础 → 文本处理 | ⏱️ 建议学习时长：2-3 小时
 
 ---
 
 ## 前言：从"看日志"到"分析日志"
 
-第六天你学会了怎么看日志——`tail -f` 实时跟踪、`less` 分页浏览。但测试工程师不只是"看"日志，更要**从海量日志中提取关键信息**。
+第一天你学会了怎么看日志——`tail -f` 实时跟踪、`less` 分页浏览。但测试工程师不只是"看"日志，更要**从海量日志中提取关键信息**。
 
 比如这些场景：
 
@@ -883,7 +883,7 @@ grep -c "true" results.jtl | awk '{print "成功数:", $1}'
 
 ---
 
-## 📋 第七天自检清单
+## 📋 第二天自检清单
 
 完成学习后，确认以下知识点：
 
@@ -912,9 +912,9 @@ grep -c "true" results.jtl | awk '{print "成功数:", $1}'
 
 ## 🔜 下一天预告
 
-**第八天：文件权限深入 + 进程管理 + 网络工具**
+**第三天：文件权限深入 + 进程管理 + 网络工具**
 
-第七天掌握了文本处理三剑客后，第八天将深入：
+第二天掌握了文本处理三剑客后，第三天将深入：
 - `chmod` / `chown` — 权限管理的实际使用（755、644 数字表示法）
 - `ps` / `top` / `kill` — 进程管理（查应用是否在运行、杀死僵尸进程）
 - `ping` / `curl` / `netstat` — 网络工具（测试接口连通性、查看端口占用）
@@ -923,11 +923,11 @@ grep -c "true" results.jtl | awk '{print "成功数:", $1}'
 
 ---
 
-> ✨ **第七天的核心心法**：不要试图一次记住所有参数。记住 **`grep` 找、`sed` 改、`awk` 算** 九个字，具体用法碰到了 `--help` 就行。三剑客的真正威力不在单个命令，而在**管道组合**——就像乐高积木，单个只是一块塑料，拼在一起才是一座城堡。
+> ✨ **第二天的核心心法**：不要试图一次记住所有参数。记住 **`grep` 找、`sed` 改、`awk` 算** 九个字，具体用法碰到了 `--help` 就行。三剑客的真正威力不在单个命令，而在**管道组合**——就像乐高积木，单个只是一块塑料，拼在一起才是一座城堡。
 
 ---
 
-# 第八天：权限深入 + 进程管理 + 网络工具
+# 第三天：权限深入 + 进程管理 + 网络工具
 
 > 🎯 **Day 8 目标**：掌握测试工程师上服务器排查"服务为什么挂了"的三大必备技能包——**权限**（为什么脚本执行不了）、**进程**（应用还在不在运行）、**网络**（端口通不通）。
 
@@ -937,7 +937,7 @@ grep -c "true" results.jtl | awk '{print "成功数:", $1}'
 
 ### 1.1 复习：rwx 权限模型
 
-第六天我们学过，`ls -l` 输出的权限字符串长这样：
+第一天我们学过，`ls -l` 输出的权限字符串长这样：
 
 ```
 -rwxr-xr--  1 user group  4096 Jul 11 10:00 script.sh
@@ -1380,7 +1380,7 @@ ssh user@192.168.1.100 "tail -100 /var/log/app/error.log | grep -B 2 -A 2 'ERROR
 
 ---
 
-## 📝 第八天课后练习
+## 📝 第三天课后练习
 
 ### 练习一：权限计算（5 题）
 
@@ -1493,7 +1493,7 @@ tail -n 100 /var/log/app/app.log | grep -C 2 "ERROR\|FATAL\|Exception"
 
 ---
 
-## 📋 第八天自检清单
+## 📋 第三天自检清单
 
 完成学习后，确认以下知识点：
 
@@ -1531,9 +1531,9 @@ tail -n 100 /var/log/app/app.log | grep -C 2 "ERROR\|FATAL\|Exception"
 
 ## 🔜 下一天预告
 
-**第九天：Shell 脚本入门**
+**第四天：Shell 脚本入门**
 
-掌握了这么多命令后，第九天将学习如何把它们写成脚本：
+掌握了这么多命令后，第四天将学习如何把它们写成脚本：
 - 变量、条件判断（`if`/`case`）、循环（`for`/`while`）
 - 函数定义与调用
 - 脚本参数（`$1`/`$2`/`$@`）
@@ -1542,7 +1542,7 @@ tail -n 100 /var/log/app/app.log | grep -C 2 "ERROR\|FATAL\|Exception"
 
 ---
 
-> ✨ **第八天的核心心法**：权限、进程、网络是测试工程师登录服务器的 **"三把刀"**。权限解决"能不能做"，进程解决"还在不在做"，网络解决"通不通"。三个维度交叉验证，才能准确定位"服务为什么挂了"。
+> ✨ **第三天的核心心法**：权限、进程、网络是测试工程师登录服务器的 **"三把刀"**。权限解决"能不能做"，进程解决"还在不在做"，网络解决"通不通"。三个维度交叉验证，才能准确定位"服务为什么挂了"。
 
 ---
 
@@ -1573,3 +1573,1537 @@ tail -n 100 /var/log/app/app.log | grep -C 2 "ERROR\|FATAL\|Exception"
 | `curl -X POST -H -d` | 发请求 | 接口测试 |
 | `ss -tlnp` | 查看监听端口 | 找端口占用 |
 | `lsof -i :8080`= ss -tlnp \| grep 8080 | 谁占了这个端口 | 端口冲突排查 |
+
+---
+
+# 第四天：Shell 脚本入门
+
+> 🎯 **Day 9 目标**：把前八天学的零散命令**串成自动化脚本**。从"手动敲命令"升级到"一键执行"——这是测试工程师从手工测试迈向自动化的第一步。
+
+---
+
+## 前言：为什么测试工程师要学 Shell 脚本？
+
+前八天你学会了 30+ 条 Linux 命令。但每次排查问题，你都要**一条一条手动敲**。如果每天要做 10 次同样的检查，你就敲 10 遍。
+
+Shell 脚本就是**把命令写进文件，一次写，反复跑**。
+
+| 场景 | 手动做法 | 写成脚本后 |
+|------|----------|-----------|
+| 每天检查服务是否正常 | SSH 上去敲 5 条命令 | `./health_check.sh` 一键出报告 |
+| 部署后验证环境 | 手动 ps / curl / tail 各来一遍 | `./deploy_verify.sh` 自动跑完 |
+| 清理过期日志 | `find ... rm ...` 每次手打 | cron 定时跑 `clean_logs.sh` |
+| 批量造测试数据 | 一条一条 curl 发请求 | `for` 循环自动发 100 条 |
+
+> 🎯 **一句话**：Shell 脚本是测试工程师的"批处理文件"——把重复劳动交给机器，把判断能力留给自己。
+
+---
+
+## 第一部分：第一个 Shell 脚本
+
+### 1.1 脚本长什么样？
+
+创建一个文件 `hello.sh`：
+
+```bash
+#!/bin/bash
+# 这是我的第一个脚本
+echo "Hello, 测试工程师！"
+echo "当前时间：$(date)"
+echo "当前目录：$(pwd)"
+```
+
+逐行解读：
+
+| 行 | 含义 |
+|----|------|
+| `#!/bin/bash` | **Shebang**（释伴行）：告诉系统用哪个解释器执行这个脚本。必须写在第一行！ |
+| `# 这是我的第一个脚本` | 注释（`#` 开头），给人看的，不执行 |
+| `echo "..."` | 打印输出到屏幕 |
+| `$(date)` / `$(pwd)` | **命令替换**：先执行括号里的命令，把输出嵌入到这行 |
+
+### 1.2 执行脚本的两种方式
+
+```bash
+# 方式一：用 bash 解释器执行（不需要执行权限）
+bash hello.sh
+
+# 方式二：直接执行（需要执行权限）
+chmod +x hello.sh     # 先加执行权限
+./hello.sh            # 再执行（./ 表示当前目录下的文件）
+```
+
+> 📌 `./hello.sh` 而不是 `hello.sh`——Linux 不会自动搜索当前目录，必须用 `./` 明确告诉系统位置。
+
+### 1.3 脚本的基本骨架
+
+```bash
+#!/bin/bash
+# ============================================
+# 脚本名称：xxx.sh
+# 功能描述：xxx
+# 作者：xxx
+# 日期：2026-07-12
+# ============================================
+
+# ----- 变量定义 -----
+LOG_DIR="/var/log/app"
+
+# ----- 函数定义 -----
+check_service() {
+    # ...
+}
+
+# ----- 主流程 -----
+echo "开始检查..."
+check_service
+echo "检查完成。"
+```
+
+> 💡 养成写脚本头部注释的习惯——三个月后你会感谢现在的自己。
+
+---
+
+## 第二部分：变量
+
+### 2.1 定义和使用变量
+
+```bash
+#!/bin/bash
+
+# 定义变量（等号两边不能有空格！）
+name="zane"
+port=8080
+is_running=true
+
+# 使用变量（前面加 $）
+echo "用户名：$name"
+echo "端口号：$port"
+
+# 变量名边界不清晰时用花括号 {}
+echo "配置文件：${name}_config.yml"   # 输出：zane_config.yml
+echo "配置文件：$name_config.yml"     # 输出：（空）——系统以为变量叫 name_config
+```
+
+> ⚠️ **Shell 铁律**：`name = "zane"` 是错的！等号两边**绝对不能有空格**。`name="zane"` 才是对的。
+
+### 2.2 三种引号的区别
+
+```bash
+name="zane"
+
+echo "$name"      # 双引号：解析变量 → 输出 zane
+echo '$name'      # 单引号：原样输出 → 输出 $name（变量不解析）
+echo `date`       # 反引号：执行命令 → 输出当前时间（和 $(date) 等效）
+```
+
+| 引号 | 行为 | 什么时候用 |
+|------|------|-----------|
+| `"..."` 双引号 | 解析变量和命令替换 | **最常用**——包含变量时 |
+| `'...'` 单引号 | 完全原样输出 | 不需要解析任何东西时 |
+| `` `...` `` 反引号 | 命令替换（老式写法） | 不推荐，用 `$(...)` 替代，后者可嵌套 |
+
+### 2.3 特殊变量
+
+```bash
+echo "脚本名：$0"
+echo "第一个参数：$1"
+echo "第二个参数：$2"
+echo "所有参数（分开）：$@"
+echo "所有参数（一个串）：$*"
+echo "参数个数：$#"
+echo "当前脚本的 PID：$$"
+echo "上一条命令的退出码：$?"
+```
+
+#### 🧪 动手试试
+
+```bash
+# 写一个脚本 test_var.sh：
+#!/bin/bash
+echo "脚本名: $0"
+echo "第1个参数: $1"
+echo "第2个参数: $2"
+echo "共 $# 个参数"
+echo "全部参数: $@"
+
+# 执行：
+chmod +x test_var.sh
+./test_var.sh hello 123 world
+# 输出：
+# 脚本名: ./test_var.sh
+# 第1个参数: hello
+# 第2个参数: 123
+# 共 3 个参数
+# 全部参数: hello 123 world
+```
+
+### 2.4 命令替换和算术运算
+
+```bash
+# 命令替换：$(命令)
+current_user=$(whoami)               # 获取当前用户名
+file_count=$(ls | wc -l)             # 统计文件数
+timestamp=$(date +%Y%m%d_%H%M%S)     # 生成时间戳 20260712_143000
+
+
+# 算术运算：$((表达式))
+count=10
+total=$((count + 5))                 # 15
+remainder=$((count % 3))             # 1
+count=$((count + 1))                 # 自增：11
+```
+
+---
+
+## 第三部分：用户输入
+
+### 3.1 read — 交互式输入
+
+```bash
+#!/bin/bash
+
+echo -n "请输入服务端口号: "    # -n 不换行
+read port
+echo "你输入的端口是: $port"
+
+# 带提示的一行写法
+read -p "请输入用户名: " username
+echo "你好, $username!"
+
+# 输入密码（不回显）
+read -sp "请输入密码: " password
+echo                        # 手动换行
+echo "密码已保存。"
+```
+
+### 3.2 脚本参数 vs 交互式输入
+
+| 方式 | 适用场景 | 示例 |
+|------|----------|------|
+| 脚本参数 `$1` `$2` | 自动化/定时任务 | `./deploy.sh app 8080` |
+| `read` 交互输入 | 手动操作、需要灵活输入 | 运行中提示输入端口 |
+
+---
+
+## 第四部分：条件判断
+
+### 4.1 if 语句基本结构
+
+```bash
+#!/bin/bash
+
+# 基本语法（注意 then 要换行或加分号）
+if [ 条件 ]; then
+    条件成立时执行的命令
+elif [ 另一个条件 ]; then
+    另一个条件成立时执行
+else
+    都不成立时执行
+fi    # ← fi 是 if 的反写，表示结束
+```
+
+> ⚠️ **`[ 条件 ]` 的语法铁律**：`[` 和 `]` 两边**必须有空格**！`[条件]` 是错的，`[ 条件 ]` 才是对的。
+
+### 4.2 数值比较
+
+```bash
+#!/bin/bash
+
+port=8080
+
+# 数值比较运算符
+if [ $port -eq 8080 ]; then       # -eq 等于 (equal)
+    echo "端口是 8080"
+fi
+
+if [ $port -ne 80 ]; then         # -ne 不等于 (not equal)
+    echo "端口不是 80"
+fi
+
+if [ $port -gt 1024 ]; then       # -gt 大于 (greater than)
+    echo "端口号 > 1024"
+fi
+
+if [ $port -lt 1024 ]; then       # -lt 小于 (less than)
+    echo "端口号 < 1024（特权端口）"
+fi
+
+if [ $port -ge 80 ]; then         # -ge 大于等于
+    echo "端口 >= 80"
+fi
+
+if [ $port -le 65535 ]; then      # -le 小于等于
+    echo "端口合法"
+fi
+```
+
+| 运算符 | 含义 | 记忆 |
+|--------|------|------|
+| `-eq` | 等于 | **eq**ual |
+| `-ne` | 不等于 | **n**ot **e**qual |
+| `-gt` | 大于 | **g**reater **t**han |
+| `-lt` | 小于 | **l**ess **t**han |
+| `-ge` | 大于等于 | **g**reater or **e**qual |
+| `-le` | 小于等于 | **l**ess or **e**qual |
+
+### 4.3 字符串比较
+
+```bash
+#!/bin/bash
+
+service="nginx"
+
+# 字符串比较
+if [ "$service" = "nginx" ]; then        # 等于（一个等号！）
+    echo "Web 服务器"
+fi
+
+if [ "$service" != "mysql" ]; then       # 不等于
+    echo "不是数据库"
+fi
+
+if [ -z "$service" ]; then               # -z 判断是否为空（zero length）
+    echo "变量为空"
+fi
+
+if [ -n "$service" ]; then               # -n 判断是否非空
+    echo "变量非空: $service"
+fi
+```
+
+> ⚠️ **字符串比较用 `=` 不是 `==`**（`==` 在某些 shell 中也能用，但 `=` 是 POSIX 标准）。切记变量加双引号 `"$var"`——如果变量为空，不加引号会导致语法错误。
+
+### 4.4 文件/目录判断（测试工程师高频）
+
+```bash
+#!/bin/bash
+
+log_file="/var/log/app/app.log"
+app_dir="/opt/webapp"
+
+[ -e "$log_file" ] && echo "文件存在"       # -e 是否存在
+[ -f "$log_file" ] && echo "是普通文件"     # -f 是文件
+[ -d "$app_dir" ]  && echo "是目录"         # -d 是目录
+[ -r "$log_file" ] && echo "可读"           # -r 有读权限
+[ -w "$log_file" ] && echo "可写"           # -w 有写权限
+[ -x "$log_file" ] && echo "可执行"         # -x 有执行权限
+[ -s "$log_file" ] && echo "文件非空"       # -s 大小 > 0
+[ -L "$log_file" ] && echo "是软链接"       # -L 是符号链接
+```
+
+> 💡 `&&` 是"短路与"——前面条件成立才执行后面。`[ -f file ] && echo "存在"` 等价于 `if [ -f file ]; then echo "存在"; fi`，更简洁。
+
+### 4.5 逻辑运算
+
+```bash
+# AND（与）：两个条件都满足
+if [ "$port" -gt 0 ] && [ "$port" -lt 65535 ]; then
+    echo "端口号合法"
+fi
+
+# 或者用 -a（and）
+if [ "$port" -gt 0 -a "$port" -lt 65535 ]; then
+    echo "端口号合法"
+fi
+
+# OR（或）：任一条件满足
+if [ "$answer" = "y" ] || [ "$answer" = "yes" ]; then
+    echo "确认操作"
+fi
+
+# 或者用 -o（or）
+if [ "$answer" = "y" -o "$answer" = "yes" ]; then
+    echo "确认操作"
+fi
+
+# NOT（非）：取反
+if ! [ -f "$config_file" ]; then
+    echo "配置文件不存在！"
+fi
+```
+
+> 📌 推荐用 `&&` `||` `!` 而不是 `-a` `-o`——前者更可读，且 POSIX 兼容性更好。
+
+### 4.6 `[[ ]]` 增强版（推荐）
+
+`[[ ]]` 是 `[ ]` 的增强版，支持 `&&`/`||` 直接写在括号里、支持正则匹配：
+
+```bash
+#!/bin/bash
+
+file="/var/log/app.log"
+
+# 支持正则匹配 =~
+if [[ "$file" =~ \.log$ ]]; then
+    echo "这是日志文件"
+fi
+
+# 支持 && 和 || 直接在括号内
+if [[ -f "$file" && -r "$file" ]]; then
+    echo "文件存在且可读"
+fi
+
+# 支持通配符匹配 ==
+if [[ "$file" == *.log ]]; then
+    echo "文件名以 .log 结尾"
+fi
+```
+
+> 📌 `[[ ]]` 是 bash 专属，`[ ]` 是 POSIX 标准。日常脚本用 `[[ ]]` 更方便，跨 Shell 脚本用 `[ ]`。
+
+---
+
+## 第五部分：case 多分支
+
+当 if/elif 超过 3 个分支时，用 `case` 更清晰：
+
+```bash
+#!/bin/bash
+
+read -p "请输入操作 (start/stop/restart/status): " action
+
+case "$action" in
+    start)
+        echo "启动服务..."
+        # 启动命令
+        ;;
+    stop)
+        echo "停止服务..."
+        # 停止命令
+        ;;
+    restart)
+        echo "重启服务..."
+        # 重启命令
+        ;;
+    status)
+        echo "查看状态..."
+        # 状态命令
+        ;;
+    *)
+        echo "错误：不支持的操作 '$action'"
+        echo "用法：$0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac    # ← esac 是 case 的反写
+```
+
+#### case 语法要点
+
+| 元素 | 含义 |
+|------|------|
+| `值)` | 匹配分支，值可以是字符串或通配符（`*` 匹配任意） |
+| `;;` | 分支结束（类似 break） |
+| `*）` | default 分支，所有未匹配的都会到这里 |
+| `|` | 分隔多个匹配项，如 `y\|yes\|Y)` |
+
+---
+
+## 第六部分：循环
+
+### 6.1 for 循环 — 遍历列表
+
+```bash
+#!/bin/bash
+
+# ===== 遍历字符串列表 =====
+for service in nginx mysql redis java; do
+    echo "检查 $service..."
+    ps aux | grep "$service" | grep -v grep > /dev/null
+    if [ $? -eq 0 ]; then
+        echo "  ✅ $service 运行中"
+    else
+        echo "  ❌ $service 未运行"
+    fi
+done
+
+# ===== 遍历数字范围 =====
+for i in {1..5}; do
+    echo "第 $i 次尝试..."
+done
+
+# ===== 遍历命令输出（一行一行读） =====
+for file in $(ls /var/log/*.log); do
+    echo "处理日志: $file"
+    wc -l "$file"
+done
+
+# ===== C 语言风格的 for =====
+for ((i=1; i<=10; i++)); do
+    echo "序号: $i"
+done
+```
+
+### 6.2 while 循环 — 条件成立一直执行
+
+```bash
+#!/bin/bash
+
+# ===== 计数器循环 =====
+count=1
+while [ $count -le 5 ]; do
+    echo "第 $count 次"
+    count=$((count + 1))
+done
+
+# ===== 逐行读取文件 =====
+# 这是处理日志的常用模式！
+while IFS= read -r line; do
+    echo "日志行: $line"
+done < /var/log/app.log
+
+# ===== 死循环 + 跳出 =====
+while true; do
+    read -p "输入 q 退出: " input
+    if [ "$input" = "q" ]; then
+        break          # 跳出循环
+    fi
+    echo "你输入了: $input"
+done
+
+# ===== 条件监控（实用：等某个服务启动） =====
+echo "等待 MySQL 启动..."
+while ! nc -z localhost 3306 2>/dev/null; do
+    echo "  等待中..."
+    sleep 2
+done
+echo "MySQL 已就绪！"
+```
+
+#### for vs while 选择指南
+
+| 场景 | 用 |
+|------|-----|
+| 遍历已知的列表/范围 | `for` |
+| 不知道次数，等待条件满足 | `while` |
+| 逐行读文件 | `while read` |
+| 死循环 + 条件跳出 | `while true` |
+
+---
+
+## 第七部分：函数
+
+### 7.1 函数定义与调用
+
+```bash
+#!/bin/bash
+
+# 定义函数（两种写法等价）
+check_port() {
+    local port=$1                           # $1 是函数的第一个参数
+    if ss -tlnp | grep -q ":$port "; then
+        echo "✅ 端口 $port 正在监听"
+        return 0                            # 返回 0 = 成功
+    else
+        echo "❌ 端口 $port 未监听"
+        return 1                            # 返回 1 = 失败
+    fi
+}
+
+# 也可以这样写（省略 function 关键字）
+function check_disk() {
+    df -h | grep "/$" | awk '{print "磁盘使用率: "$5}'
+}
+
+# 调用函数
+check_port 8080          # 传参和脚本传参一样，空格分隔
+check_port 3306
+check_disk
+```
+
+### 7.2 函数参数和返回值
+
+```bash
+#!/bin/bash
+
+# 函数内部用 $1 $2 取参数，和脚本参数一样
+greet() {
+    echo "你好, $1！你是第 $2 位访客。"
+}
+
+greet "张三" 1        # 输出：你好, 张三！你是第 1 位访客。
+
+# 函数的"返回值"有两层含义：
+# ① 退出码（return 0-255）：用 $? 获取，表示成功/失败
+# ② 输出结果（echo/printf）：用 $(函数) 捕获
+
+get_status() {
+    local service=$1
+    if ps aux | grep -q "$service"; then
+        echo "running"        # 输出到 stdout
+        return 0
+    else
+        echo "stopped"
+        return 1
+    fi
+}
+
+# 捕获输出
+status=$(get_status nginx)    # status = "running" 或 "stopped"
+echo "nginx 状态: $status"
+
+# 检查退出码
+if get_status nginx > /dev/null; then    # > /dev/null 丢弃输出，只看退出码
+    echo "正常"
+else
+    echo "异常"
+fi
+```
+
+> 📌 **关键概念**：函数的 `echo` 输出和 `return` 退出码是两回事。`return` 只能返回 0~255 的整数，表示成功/失败；真正的"结果数据"通过 `echo` 输出，调用方用 `$(...)` 捕获。
+
+### 7.3 局部变量
+
+```bash
+#!/bin/bash
+
+name="全局变量"
+
+my_func() {
+    local name="局部变量"     # local 关键字限制作用域
+    echo "函数内: $name"      # 输出：局部变量
+}
+
+my_func
+echo "函数外: $name"          # 输出：全局变量（不受函数内修改影响）
+```
+
+> 💡 **函数内变量务必加 `local`**——否则会污染全局命名空间，导致难以排查的 bug。
+
+---
+
+## 第八部分：退出码与错误处理
+
+### 8.1 退出码 `$?`
+
+```bash
+#!/bin/bash
+
+# 每条命令执行后都有一个退出码
+# 0 = 成功，非 0 = 失败
+
+ls /tmp
+echo "ls 的退出码: $?"       # 0（成功）
+
+ls /nonexistent 2>/dev/null
+echo "ls 的退出码: $?"       # 2（失败）
+
+# 脚本自己的退出码（默认是最后一条命令的退出码）
+exit 0     # 明确表示成功
+exit 1     # 明确表示失败
+```
+
+#### 常见退出码
+
+| 退出码 | 含义 |
+|--------|------|
+| `0` | 成功 |
+| `1` | 一般错误 |
+| `2` | 误用命令（如参数不对） |
+| `126` | 命令无法执行（权限问题） |
+| `127` | 命令未找到 |
+| `128+n` | 被信号 n 终止（如 130 = Ctrl+C） |
+
+### 8.2 `set -e` — 出错就停
+
+```bash
+#!/bin/bash
+set -e    # 任何命令返回非 0 就立即退出脚本
+
+# 这个是安全的写法：中途出错不会继续执行
+cd /nonexistent_dir    # 这行会失败 → 脚本立即退出
+echo "这行不会执行"
+rm -rf /important      # 幸好没执行到这一行！
+```
+
+#### 常用 set 选项组合
+
+```bash
+#!/bin/bash
+set -euo pipefail
+# -e: 命令失败立即退出
+# -u: 使用未定义的变量时报错
+# -o pipefail: 管道中任一命令失败，整个管道视为失败
+
+# 这行会报错并退出（因为 undeclared_var 未定义）
+echo "$undeclared_var"
+```
+
+> 💡 **测试脚本建议加上 `set -euo pipefail`**——它能在问题发生时立刻暴露，而不是带着错误继续运行。生产脚本也要加，尤其是涉及 `rm`、数据库操作的脚本。
+
+### 8.3 trap — 脚本退出时自动清理
+
+```bash
+#!/bin/bash
+
+# 定义清理函数
+cleanup() {
+    echo "正在清理临时文件..."
+    rm -f /tmp/test_*.tmp
+    echo "清理完成。"
+}
+
+# trap：无论脚本怎么退出（正常/报错/Ctrl+C），都执行 cleanup
+trap cleanup EXIT
+
+# 主流程
+echo "开始处理..."
+# ... 各种操作 ...
+# 即使中间出错，cleanup 也会执行
+```
+
+---
+
+## 🔥 实战：服务健康检查脚本
+
+把 Day 6~8 学过的命令整合成一个可用的脚本：
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# ============================================
+# 脚本名称：health_check.sh
+# 功能描述：对指定服务进行健康检查
+# 用法：./health_check.sh <服务名> <端口> [日志路径]
+# 示例：./health_check.sh nginx 80 /var/log/nginx/error.log
+# ============================================
+
+# ----- 参数检查 -----
+if [ $# -lt 2 ]; then
+    echo "用法: $0 <服务名> <端口> [日志路径]"
+    echo "示例: $0 nginx 80 /var/log/nginx/error.log"
+    exit 1
+fi
+
+SERVICE="$1"
+PORT="$2"
+LOG_FILE="${3:-/var/log/${SERVICE}/error.log}"   # 第三个参数可选，有默认值
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+
+# ----- 颜色输出 -----
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'    # No Color
+
+# ----- 函数定义 -----
+print_header() {
+    echo "========================================"
+    echo "  ${SERVICE} 服务健康检查"
+    echo "  时间: ${TIMESTAMP}"
+    echo "========================================"
+}
+
+check_process() {
+    local count=$(ps aux | grep "$SERVICE" | grep -v grep | wc -l)
+    if [ "$count" -gt 0 ]; then
+        echo -e "${GREEN}✅ 进程检查：运行中（${count} 个进程）${NC}"
+        return 0
+    else
+        echo -e "${RED}❌ 进程检查：未运行！${NC}"
+        return 1
+    fi
+}
+
+check_port() {
+    if ss -tlnp | grep -q ":${PORT} "; then
+        local pid=$(ss -tlnp | grep ":${PORT} " | awk '{print $NF}' | grep -oP 'pid=\K[0-9]+')
+        echo -e "${GREEN}✅ 端口检查：${PORT} 正在监听（PID: ${pid}）${NC}"
+        return 0
+    else
+        echo -e "${RED}❌ 端口检查：${PORT} 未监听${NC}"
+        return 1
+    fi
+}
+
+check_http() {
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 5 "http://localhost:${PORT}" 2>/dev/null || echo "000")
+    case "$http_code" in
+        2*)
+            echo -e "${GREEN}✅ HTTP 检查：状态码 ${http_code}${NC}"
+            return 0
+            ;;
+        3*)
+            echo -e "${YELLOW}⚠️  HTTP 检查：重定向 ${http_code}${NC}"
+            return 0
+            ;;
+        *)
+            echo -e "${RED}❌ HTTP 检查：状态码 ${http_code}${NC}"
+            return 1
+            ;;
+    esac
+}
+
+check_log() {
+    if [ ! -f "$LOG_FILE" ]; then
+        echo -e "${YELLOW}⚠️  日志检查：${LOG_FILE} 不存在，跳过${NC}"
+        return 0
+    fi
+    
+    local error_count=$(grep -c "ERROR\|FATAL\|CRITICAL" "$LOG_FILE" 2>/dev/null || echo 0)
+    local recent_errors=$(grep "ERROR\|FATAL\|CRITICAL" "$LOG_FILE" 2>/dev/null | tail -5)
+    
+    if [ "$error_count" -eq 0 ]; then
+        echo -e "${GREEN}✅ 日志检查：无 ERROR/FATAL${NC}"
+    else
+        echo -e "${YELLOW}⚠️  日志检查：发现 ${error_count} 条错误${NC}"
+        echo "  最近 5 条错误："
+        echo "$recent_errors" | while read -r line; do
+            echo "    | $line"
+        done
+    fi
+}
+
+check_disk() {
+    local usage=$(df -h / | tail -1 | awk '{print $5}' | sed 's/%//')
+    if [ "$usage" -lt 80 ]; then
+        echo -e "${GREEN}✅ 磁盘检查：使用率 ${usage}%${NC}"
+    elif [ "$usage" -lt 95 ]; then
+        echo -e "${YELLOW}⚠️  磁盘检查：使用率 ${usage}%（需关注）${NC}"
+    else
+        echo -e "${RED}❌ 磁盘检查：使用率 ${usage}%（磁盘满风险！）${NC}"
+    fi
+}
+
+# ----- 主流程 -----
+print_header
+
+FAIL_COUNT=0
+
+check_process || FAIL_COUNT=$((FAIL_COUNT + 1))
+check_port     || FAIL_COUNT=$((FAIL_COUNT + 1))
+check_http     || FAIL_COUNT=$((FAIL_COUNT + 1))
+check_log
+check_disk
+
+echo "----------------------------------------"
+if [ "$FAIL_COUNT" -eq 0 ]; then
+    echo -e "${GREEN}🎉 健康检查通过！${SERVICE} 运行正常。${NC}"
+    exit 0
+else
+    echo -e "${RED}🚨 发现 ${FAIL_COUNT} 项异常，请排查！${NC}"
+    exit 1
+fi
+```
+
+#### 脚本执行效果
+
+```
+========================================
+  nginx 服务健康检查
+  时间: 2026-07-12 14:30:00
+========================================
+✅ 进程检查：运行中（2 个进程）
+✅ 端口检查：80 正在监听（PID: 12345）
+✅ HTTP 检查：状态码 200
+✅ 日志检查：无 ERROR/FATAL
+✅ 磁盘检查：使用率 45%
+----------------------------------------
+🎉 健康检查通过！nginx 运行正常。
+```
+
+---
+
+## 📝 第四天课后练习
+
+### 练习一：脚本基础（5 题）
+
+1. 下面这个脚本有什么错误？（至少 2 处）
+   ```bash
+   #!/bin/bash
+   name = "test"
+   if [$name = "test"]; then
+   echo "匹配"
+   fi
+   ```
+
+2. 写一个脚本 `file_info.sh`，接受一个文件路径作为参数，输出：
+   - 文件是否存在
+   - 如果是文件，显示大小和最后修改时间
+   - 如果是目录，显示目录下有多少个文件
+
+3. 写出以下变量的值（基于脚本 `./test.sh a b c`）：
+   - `$0` = ?
+   - `$1` = ?
+   - `$#` = ?
+   - `$@` = ?
+
+4. `[ "$a" = "$b" ]` 和 `[ "$a" -eq "$b" ]` 有什么区别？分别用于什么场景？
+
+5. 如何让一个脚本在任何命令失败时自动退出？
+
+### 练习二：条件与循环（4 题）
+
+1. 写一个脚本判断用户输入的端口号是否合法（1~65535），并区分特权端口（<1024）和普通端口。
+
+2. 写一个 `for` 循环，检查 `nginx`、`mysql`、`redis` 三个服务是否在运行（用 `ps aux | grep`），输出每个服务的状态。
+
+3. 写一个 `while` 循环，每隔 2 秒检查一次某个进程是否还在运行，不在就退出并报告"服务已停止"。
+
+4. 逐行读取 `/etc/hosts` 文件，跳过 `#` 开头的注释行和空行，打印所有有效的 hosts 记录。
+
+### 练习三：综合实战（2 题）
+
+1. **写一个部署验证脚本 `deploy_check.sh`**，接受两个参数：服务名（如 `myapp`）和端口（如 `8080`），自动完成：
+   - 检查进程是否运行（`ps aux | grep 服务名`）
+   - 检查端口是否监听（`ss -tlnp | grep 端口`）
+   - 检查 HTTP 接口是否返回 200（`curl`）
+   - 每项检查通过显示绿色的 ✅，失败显示红色的 ❌
+   - 有任一失败则脚本退出码为 1，全部通过为 0
+
+2. **写一个日志清理脚本 `clean_logs.sh`**：
+   - 接受一个目录路径作为参数（如 `/var/log/myapp/`）
+   - 找出该目录下所有超过 7 天的 `.log` 文件
+   - 先列出将要删除的文件，询问用户确认（y/n）
+   - 确认后删除，输出清理了多少个文件和释放了多少空间
+   - 如果目录不存在，给出错误提示并退出
+
+---
+
+## 📋 第四天自检清单
+
+完成学习后，确认以下知识点：
+
+- [ ] 能写出脚本的 Shebang 行并解释其作用
+- [ ] 知道 `$1`、`$2`、`$@`、`$#`、`$?` 各自的含义
+- [ ] 能正确使用变量（等号两边无空格、花括号定界）
+- [ ] 知道双引号、单引号、反引号的区别
+- [ ] 能用 `if [ 条件 ]; then ... fi` 做条件判断
+- [ ] 能区分 `-eq`（数值）和 `=`（字符串）的使用场景
+- [ ] 能用 `[ -f ]`、`[ -d ]`、`[ -r ]` 判断文件属性
+- [ ] 能用 `for` 遍历列表，用 `while` 做条件循环
+- [ ] 能在函数内用 `local` 定义局部变量
+- [ ] 能理解函数的 `echo`（数据输出）和 `return`（退出码）的区别
+- [ ] 知道 `set -e` 和 `trap` 的作用
+- [ ] 完成三道课后练习
+
+---
+
+## 🔜 下一天预告
+
+**第五天：Shell 脚本进阶 + Linux 模块总结**
+
+- 数组与关联数组
+- Here Document 与 Here String
+- `find` 与 `xargs` 高级用法
+- cron 定时任务
+- 实战：写一个自动备份脚本 + 配置 cron 定时执行
+- Linux 模块整体回顾与综合测试
+
+---
+
+> ✨ **第四天的核心心法**：Shell 脚本不是一门"完整的编程语言"，它是一个**命令的编排工具**。你不需要用它写复杂的算法——你需要的是让已经掌握的命令**按条件自动执行、出错自动停止、定期自动运行**。记住：好的 Shell 脚本 = 清晰的注释 + 完善的错误处理 + 可重复执行。别人（包括三个月后的你自己）能看懂、能复用，才是好脚本。
+
+---
+
+# 第五天：Shell 脚本进阶 + Linux 模块总结
+
+> 🎯 **Day 5 目标**：补齐 Shell 脚本最后几块拼图，掌握定时任务自动化，然后对整个 Linux 模块做一次全面回顾。这一天结束后，你就从一个"会敲命令的测试工程师"升级为"能把重复劳动自动化的测试工程师"。
+
+---
+
+## 第一部分：数组
+
+### 1.1 普通数组
+
+```bash
+#!/bin/bash
+
+# 定义数组（空格分隔）
+services=("nginx" "mysql" "redis" "java")
+
+# 访问元素（索引从 0 开始）
+echo "第一个服务: ${services[0]}"       # nginx
+echo "第三个服务: ${services[2]}"       # redis
+
+# 所有元素
+echo "全部服务: ${services[@]}"
+
+# 数组长度
+echo "服务总数: ${#services[@]}"
+
+# 遍历数组
+for svc in "${services[@]}"; do
+    echo "检查 $svc..."
+done
+
+# 追加元素
+services+=("elasticsearch")
+```
+
+### 1.2 关联数组（类似字典/Map）
+
+```bash
+#!/bin/bash
+
+# 声明关联数组（必须先 declare -A）
+declare -A server_ports
+server_ports["nginx"]=80
+server_ports["mysql"]=3306
+server_ports["redis"]=6379
+server_ports["java"]=8080
+
+# 访问
+echo "MySQL 端口: ${server_ports["mysql"]}"
+
+# 遍历 key
+for name in "${!server_ports[@]}"; do
+    echo "服务 $name → 端口 ${server_ports[$name]}"
+done
+
+# 输出：
+# 服务 nginx → 端口 80
+# 服务 mysql → 端口 3306
+# 服务 redis → 端口 6379
+# 服务 java → 端口 8080
+```
+
+---
+
+## 第二部分：Here Document（多行文本神器）
+
+### 2.1 基本语法
+
+```bash
+#!/bin/bash
+
+# Here Document：把多行文本直接传给命令
+# 语法：命令 << 标记
+#       多行内容...
+#       标记（必须顶格写！）
+
+cat << EOF
+这是第一行
+这是第二行
+  缩进内容也会保留
+EOF
+# ↑ 结束标记必须顶格，前面不能有空格或 Tab！
+```
+
+### 2.2 实际应用场景
+
+```bash
+#!/bin/bash
+
+# ===== 场景 1：生成配置文件 =====
+port=8080
+db_host="localhost"
+cat > config.yaml << EOF
+server:
+  port: ${port}
+database:
+  host: ${db_host}
+  name: myapp
+EOF
+# 注意：EOF 不引号时，变量会被解析
+
+# ===== 场景 2：输出帮助信息 =====
+usage() {
+    cat << EOF
+用法: $0 [选项] <文件>
+
+选项:
+  -h, --help     显示此帮助信息
+  -v, --verbose  详细输出
+  -f, --force    强制执行，不询问确认
+
+示例:
+  $0 -v /var/log/app.log
+  $0 --force /tmp/test.txt
+EOF
+}
+
+# ===== 场景 3：不解析变量（EOF 加引号） =====
+cat << 'EOF'
+当前用户: $USER     # 原样输出，不解析
+家目录: $HOME       # 原样输出
+EOF
+
+# ===== 场景 4：管道中使用 =====
+cat << EOF | grep "ERROR"
+INFO: 服务启动成功
+ERROR: 数据库连接失败
+ERROR: 端口被占用
+INFO: 健康检查通过
+EOF
+# 只输出两行 ERROR
+```
+
+> 📌 `<<` 是 Here Document，`<<<` 是 Here String（把单行字符串当 stdin 传给命令）：`grep "ERROR" <<< "ERROR: timeout"`
+
+---
+
+## 第三部分：find + xargs 高级用法
+
+### 3.1 find — 搜索文件
+
+```bash
+# ===== 基础搜索 =====
+find /var/log -name "*.log"               # 按文件名（通配符）
+find /var/log -name "*.log" -type f       # 只要文件（排除目录）
+find /opt -type d -name "config"          # 只要目录
+
+# ===== 按时间搜索（测试工程师高频）=====
+find /var/log -mtime -1                   # 最近 24 小时修改的文件
+find /var/log -mtime +7                   # 7 天前修改的文件
+find /var/log -mmin -30                   # 最近 30 分钟修改的文件
+# -mtime 修改时间  -atime 访问时间  -ctime 属性变更时间
+
+# ===== 按大小搜索 =====
+find /var/log -size +100M                 # 大于 100MB 的文件
+find /var/log -size +1G                   # 大于 1GB（大日志文件！）
+
+# ===== 按权限搜索 =====
+find / -type f -perm 777                  # 找所有权限为 777 的文件（安全审计用）
+find /home -type f -perm /u+x             # 找所有有执行权限的文件
+
+# ===== 条件组合 =====
+find /var/log -name "*.log" -mtime +7 -size +10M
+# 找 7 天前修改且大于 10MB 的日志文件
+
+# ===== 对找到的文件执行操作 =====
+find /var/log -name "*.log" -mtime +30 -delete       # 直接删除（小心！）
+find /var/log -name "*.log" -mtime +30 -exec gzip {} \;  # 压缩旧日志
+find . -name "*.sh" -exec chmod +x {} \;              # 批量加执行权限
+```
+
+### 3.2 xargs — 管道参数传递
+
+有些命令不接受管道输入（如 `rm`、`chmod`），`xargs` 把管道内容转为命令行参数：
+
+```bash
+# ===== 基础用法 =====
+# 错误：ls *.log | rm          ← rm 不读 stdin，这个命令无效！
+# 正确：
+ls *.log | xargs rm             # 相当于 rm file1.log file2.log ...
+
+# ===== 批量删除旧日志 =====
+find /var/log -name "*.log" -mtime +30 | xargs rm -f
+
+# ===== 配合 -n 控制每次参数个数 =====
+echo "a b c d e f" | xargs -n 2 echo
+# 输出：
+# a b
+# c d
+# e f
+
+# ===== 配合 -I 做占位替换（每次处理一个） =====
+find . -name "*.log" | xargs -I {} mv {} {}.bak
+# 把每个 .log 文件重命名为 .log.bak
+
+# ===== 配合 -P 并行处理（加速） =====
+find . -name "*.log" | xargs -P 4 -I {} gzip {}
+# 用 4 个进程并行压缩日志文件
+
+# ===== 处理文件名含空格的情况 =====
+find . -name "*.log" -print0 | xargs -0 rm
+# -print0 和 -0：用 null 字符分隔文件名，安全处理空格
+```
+
+> ⚠️ `find ... | xargs rm` 是危险组合。执行前先用 `find ... | xargs echo` 预览要操作的文件列表，确认无误再换回 `rm`。
+
+---
+
+## 第四部分：cron 定时任务
+
+> 🎯 **核心场景**：每天凌晨自动备份数据库、每小时检查服务状态、每周清理过期日志——这些都是测试/运维的日常工作，cron 就是这些任务的"闹钟"。
+
+### 4.1 crontab 基本操作
+
+```bash
+crontab -l              # 查看当前用户的定时任务
+crontab -e              # 编辑定时任务（会打开默认编辑器）
+crontab -u zane -l      # 查看指定用户的定时任务（需 root）
+
+# crontab 格式（5 个时间字段 + 命令）：
+# ┌──── 分钟 (0-59)
+# │ ┌──── 小时 (0-23)
+# │ │ ┌──── 日 (1-31)
+# │ │ │ ┌──── 月 (1-12)
+# │ │ │ │ ┌──── 星期 (0-7, 0 和 7 都表示周日)
+# │ │ │ │ │
+# * * * * * 命令
+```
+
+### 4.2 时间表达式速查
+
+| 表达式 | 含义 |
+|--------|------|
+| `0 2 * * *` | 每天凌晨 2:00 |
+| `*/5 * * * *` | 每 5 分钟 |
+| `0 */2 * * *` | 每 2 小时整点 |
+| `0 9 * * 1-5` | 工作日早上 9:00 |
+| `0 0 1 * *` | 每月 1 号凌晨 |
+| `0 3 * * 0` | 每周日凌晨 3:00 |
+| `30 8 * * *` | 每天 8:30 |
+| `0,30 * * * *` | 每小时的第 0 和第 30 分钟 |
+
+### 4.3 实战示例
+
+```bash
+# 编辑定时任务
+crontab -e
+
+# 添加以下内容：
+# ===== 测试环境常见定时任务 =====
+# 每天凌晨 2 点备份数据库
+0 2 * * * /opt/scripts/backup_db.sh >> /var/log/backup.log 2>&1
+
+# 每小时检查一次服务状态
+0 * * * * /opt/scripts/health_check.sh nginx 80 >> /var/log/health.log
+
+# 每天凌晨 3 点清理 7 天前的日志
+0 3 * * * find /var/log/app -name "*.log" -mtime +7 -delete
+
+# 每 5 分钟检查一次进程是否存在（简单的保活监控）
+*/5 * * * * pgrep nginx > /dev/null || systemctl restart nginx
+
+# 每周一早上 9 点发周报（生成测试报告）
+0 9 * * 1 /opt/scripts/generate_weekly_report.sh
+```
+
+### 4.4 cron 调试技巧
+
+```bash
+# 1. 确保脚本有执行权限
+chmod +x /opt/scripts/my_task.sh
+
+# 2. 脚本中写绝对路径（cron 的 PATH 与登录 shell 不同）
+# 错误：grep "ERROR" app.log
+# 正确：/bin/grep "ERROR" /var/log/app/app.log
+
+# 3. 重定向输出，方便排查
+# > /dev/null 2>&1   ← 完全静默
+# >> /var/log/task.log 2>&1  ← 记录日志（推荐）
+
+# 4. 查看 cron 是否执行了
+grep CRON /var/log/syslog       # Ubuntu/Debian
+grep CRON /var/log/cron         # CentOS/RHEL
+
+# 5. 测试：设一个 1 分钟后执行的 cron，看效果
+```
+
+---
+
+## 🔥 实战：自动备份脚本 + cron
+
+把今天学的数组、Here Document、find、cron 整合起来：
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# ============================================
+# 脚本名称：backup.sh
+# 功能描述：自动备份指定目录，保留最近 N 天的备份
+# 用法：./backup.sh <源目录> [保留天数]
+# 示例：./backup.sh /var/www/html 7
+# cron：0 2 * * * /opt/scripts/backup.sh /var/www/html 7
+# ============================================
+
+# ----- 参数 -----
+SRC_DIR="${1:?用法: $0 <源目录> [保留天数]}"
+RETENTION_DAYS="${2:-7}"                         # 默认保留 7 天
+
+# ----- 路径 -----
+BACKUP_ROOT="/opt/backups"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+DIR_NAME=$(basename "$SRC_DIR")
+BACKUP_FILE="${BACKUP_ROOT}/${DIR_NAME}_${TIMESTAMP}.tar.gz"
+LOG_FILE="${BACKUP_ROOT}/backup.log"
+
+# ----- 函数 -----
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+}
+
+check_prereq() {
+    if [ ! -d "$SRC_DIR" ]; then
+        log "❌ 源目录不存在: $SRC_DIR"
+        exit 1
+    fi
+    mkdir -p "$BACKUP_ROOT"
+}
+
+do_backup() {
+    log "📦 开始备份: $SRC_DIR → $BACKUP_FILE"
+    
+    if tar -czf "$BACKUP_FILE" -C "$(dirname "$SRC_DIR")" "$DIR_NAME" 2>/dev/null; then
+        local size=$(du -h "$BACKUP_FILE" | cut -f1)
+        log "✅ 备份完成: $BACKUP_FILE (${size})"
+    else
+        log "❌ 备份失败！"
+        exit 1
+    fi
+}
+
+cleanup_old() {
+    log "🧹 清理 ${RETENTION_DAYS} 天前的备份..."
+    
+    local old_files=$(find "$BACKUP_ROOT" -name "${DIR_NAME}_*.tar.gz" -mtime "+${RETENTION_DAYS}")
+    
+    if [ -z "$old_files" ]; then
+        log "  没有需要清理的旧备份"
+        return
+    fi
+    
+    local count=0
+    while IFS= read -r file; do
+        log "  删除: $(basename "$file")"
+        rm -f "$file"
+        count=$((count + 1))
+    done <<< "$old_files"
+    
+    log "✅ 清理了 ${count} 个旧备份"
+}
+
+show_summary() {
+    log "----------------------------------------"
+    log "📊 备份汇总"
+    log "  备份目录: ${BACKUP_ROOT}"
+    log "  当前备份数: $(find "$BACKUP_ROOT" -name "${DIR_NAME}_*.tar.gz" | wc -l)"
+    log "  备份占用空间: $(du -sh "$BACKUP_ROOT" | cut -f1)"
+    log "  保留天数: ${RETENTION_DAYS}"
+    log "----------------------------------------"
+}
+
+# ----- 主流程 -----
+log "===== 自动备份任务开始 ====="
+check_prereq
+do_backup
+cleanup_old
+show_summary
+log "===== 自动备份任务结束 ====="
+```
+
+#### 配置 cron
+
+```bash
+# 设为可执行
+chmod +x /opt/scripts/backup.sh
+
+# 编辑 crontab
+crontab -e
+
+# 添加：每天凌晨 2:00 备份 /var/www/html，保留 7 天
+0 2 * * * /opt/scripts/backup.sh /var/www/html 7 >> /var/log/backup_cron.log 2>&1
+```
+
+> 💡 **测试工程师写 cron 的三个习惯**：① 脚本先手动跑一遍确认无误；② 日志重定向到文件，方便排查 cron 执行情况；③ 第一次设一个近的时间（如 5 分钟后）验证，确认 OK 再改回目标时间。
+
+---
+
+## 第五部分：debug 脚本
+
+### 5.1 调试选项
+
+```bash
+#!/bin/bash
+
+# ===== 调试方法 =====
+
+# 方法 1：运行时开启调试
+bash -x script.sh        # 执行并打印每条命令（最常用！）
+bash -v script.sh        # 执行并打印原始脚本
+bash -xv script.sh       # 两者结合
+
+# 方法 2：脚本内临时开启
+set -x                   # 从这里开始打印调试信息
+# ... 要调试的代码 ...
+set +x                   # 关闭调试
+
+# 方法 3：只调试特定函数
+my_func() {
+    set -x
+    # 函数体
+    set +x
+}
+```
+
+### 5.2 常见错误排查
+
+| 症状 | 可能原因 | 排查命令 |
+|------|----------|----------|
+| `Permission denied` | 脚本没执行权限 | `ls -l script.sh` |
+| `command not found` | 路径不对 / 没安装 | `which 命令` / `echo $PATH` |
+| `No such file` | 路径写错 / 目录不存在 | `ls -la 目录` |
+| 变量为空 | 没赋值 / 引号问题 | `bash -x` 看执行过程 |
+| cron 没执行 | 路径问题 / 权限 | `grep CRON /var/log/syslog` |
+| `[: too many arguments` | 变量为空没加引号 | 始终用 `"$var"` |
+
+---
+
+## 📝 第五天课后练习
+
+### 练习一：数组与 Here Document（3 题）
+
+1. 用数组存储 5 个测试环境需要检查的端口号，写一个循环输出每个端口是否被监听。
+
+2. 用 Here Document 生成一个 `docker-compose.yml` 模板，包含 `$PROJECT_NAME` 和 `$PORT` 两个变量。
+
+3. 用关联数组存储 3 个服务名和对应的健康检查 URL，遍历输出每个服务的检查结果（HTTP 状态码）。
+
+### 练习二：find + xargs + cron（3 题）
+
+1. 写一条命令：找出 `/var/log` 下所有超过 30 天、大于 50MB 的 `.log` 文件并删除。
+
+2. 写一条 `find` 命令：批量把当前目录及子目录下所有 `.sh` 文件的权限设为 755。
+
+3. 写出以下 crontab 的含义：
+   ```
+   0 8 * * 1-5 /opt/scripts/morning_check.sh
+   */10 * * * * /opt/scripts/ping_monitor.sh
+   0 23 * * 0 find /tmp -type f -mtime +1 -delete
+   ```
+
+### 练习三：综合实战（1 题）
+
+**写一个定时执行的日志归档脚本 `archive_logs.sh`**：
+- 接受 3 个参数：日志目录、归档天数（超过此天数就归档）、目标备份目录
+- 找出日志目录下超过归档天数的文件，用 tar 打包（压缩文件名含日期）
+- 打包后删除原文件
+- 检查目标备份目录的磁盘使用率，超过 80% 给出警告
+- 所有操作记录到 `/var/log/archive.log`
+
+---
+
+## 📋 第五天自检清单
+
+完成学习后，确认以下知识点：
+
+- [ ] 能定义和遍历数组（`${arr[@]}`、`${#arr[@]}`）
+- [ ] 能使用关联数组（`declare -A`、`${!map[@]}` 遍历 key）
+- [ ] 能用 Here Document 生成配置文件或帮助信息
+- [ ] 知道 `<< EOF` 和 `<< 'EOF'` 的区别（解析 vs 不解析变量）
+- [ ] 能用 `find -name -mtime -size` 组合搜索文件
+- [ ] 能用 `xargs` 把管道内容转为命令行参数
+- [ ] 知道 `find ... -exec {} \;` 和 `find ... | xargs` 的区别
+- [ ] 能读懂和编写 crontab 时间表达式
+- [ ] 知道 cron 调试的常见陷阱（绝对路径、环境变量、日志重定向）
+- [ ] 能用 `bash -x` 调试脚本
+
+---
+
+---
+
+# 🏆 Linux 模块总复习
+
+> 🎯 **五天 Linux 学习之旅**即将结束。下面是一份系统的回顾，帮你把学过的知识点串联成网，而不是零散的"命令列表"。
+
+---
+
+## 知识地图
+
+```
+测试工程师的 Linux 技能树
+│
+├─ 📂 文件操作（Day 1）
+│   ├─ 导航：pwd / ls -l / cd
+│   ├─ 增删改：mkdir -p / rm -rf / cp / mv
+│   └─ 查看：cat / less / head / tail -f
+│
+├─ 🔍 文本处理（Day 2）
+│   ├─ 搜索：grep -i -v -n -c -E -A -B -C
+│   ├─ 替换：sed 's/旧/新/g' / -n 'Np' / /模式/d
+│   ├─ 列处理：awk '{print $N}' / $NF / NR / END / ==
+│   └─ 组合技：grep | awk | sort | uniq -c | sort -rn
+│
+├─ 🔐 权限 + 进程 + 网络（Day 3）—— "服务器排查三把刀"
+│   ├─ 权限：chmod 755/644 / chown / r=4 w=2 x=1
+│   ├─ 进程：ps aux / top / kill -15 vs -9 / nohup &
+│   └─ 网络：ping / curl -I -X -H -d -w / ss -tlnp
+│
+└─ 🐚 脚本自动化（Day 4~5）
+    ├─ 基础：变量 / if / for / while / 函数 / $1 $? $@ $#
+    ├─ 安全：set -euo pipefail / trap / exit
+    ├─ 进阶：数组 / Here Doc / find + xargs
+    ├─ 定时：crontab
+    └─ 实战：健康检查脚本 / 自动备份脚本
+```
+
+---
+
+## 核心命令一句话回忆
+
+| 命令 | 一句话 |
+|------|--------|
+| `ls -lh` | 看目录下有什么，带文件大小 |
+| `cd -` | 回到上一个目录 |
+| `tail -f` | 实时看日志，测试工程师最常用 |
+| `grep` | 搜索文本，管道过滤的起点 |
+| `sed` | 替换文本，不改原文件就不加 `-i` |
+| `awk` | 按列提取和计算，`=`≠`==` |
+| `chmod 755` | 设权限，生产永远不要 777 |
+| `ps aux` | 查进程，**没有横杠** |
+| `curl -s -o /dev/null -w` | 提取 HTTP 状态码 |
+| `ss -tlnp` | 看谁在监听端口 |
+| `\|` (管道) | 命令之间的"传送带"，前一个的输出 = 后一个的输入 |
+| `bash -x` | 调试脚本，看每条命令的执行过程 |
+
+---
+
+## 排查故障的标准流程（面试必考）
+
+```
+用户说"服务连不上了"
+     │
+     ▼
+Step 1: ping -c 2 服务器IP        ← 网络层通不通？
+     │
+     ├─ 通 ──▶ Step 2
+     └─ 不通 → 检查网络/VPN/防火墙
+     │
+     ▼
+Step 2: ssh 上去 ps aux | grep     ← 进程在不在？
+     │
+     ├─ 在 ──▶ Step 3
+     └─ 不在 → 看日志找原因，通知运维重启
+     │
+     ▼
+Step 3: ss -tlnp | grep :端口      ← 端口有没有监听？
+     │
+     ├─ 有 LISTEN ──▶ Step 4
+     └─ 无 → 配置错误，查启动日志
+     │
+     ▼
+Step 4: curl -v http://IP:端口/api  ← 应用层正不正常？
+     │
+     ├─ 200 → 服务正常，检查客户端/DNS
+     ├─ 503 → 服务过载/维护中
+     └─ Connection refused → 端口没开（回 Step 3）
+     │
+     ▼
+Step 5: tail -100 error.log | grep ERROR  ← 看日志定位根因
+```
+
+---
+
+## 📝 Linux 模块综合测试（10 题）
+
+1. 写一条命令：查看 `/var/log/app.log` 的最后 50 行，并实时跟踪。
+
+2. 文件权限 `-rwxr-x---` 对应的数字权限是多少？这个权限的含义是什么？
+
+3. 写一条管道命令：从 `app.log` 中找出所有含 "ERROR" 的行，提取第 4 列（服务名），按出现次数从多到少排列。
+
+4. `kill` 和 `kill -9` 有什么区别？应该先用哪个？
+
+5. SSH 连接到远程服务器后，如何让一个 Python 脚本在断开连接后继续运行？写出完整命令。
+
+6. 写一条命令：用 `curl` 只输出 `http://localhost:8080/health` 的 HTTP 状态码数字。
+
+7. 以下 sed 命令有什么问题？
+   ```bash
+   sed 's/hello/world/d' file.txt
+   ```
+
+8. 写一个 `if` 判断：如果 `/opt/app/config.yml` 文件存在且可读，则输出"配置文件就绪"，否则输出"配置文件缺失"并退出。
+
+9. 解释这条 crontab 的含义：`30 2 * * 0 /opt/scripts/weekly_backup.sh`
+
+10. 写一个最简单的 `for` 循环：依次检查 `nginx`、`mysql`、`redis` 三个进程是否在运行，输出"✅ 运行中"或"❌ 未运行"。
+
+---
+
+> ✨ **Linux 模块核心领悟**：你不需要成为运维专家，不需要背下所有命令的所有参数。你需要的是**知道什么时候用什么工具**——看日志用 `tail -f` + `grep`，查进程用 `ps aux`，测接口用 `curl`，排查故障按四步链路。每个命令背后的 `--help` 永远在那里，但**排查思路**是你自己的。五天的练习已经让你从一个"只会跟着教程敲"的学习者，变成了一个"能自己写出健康检查脚本"的实践者。接下来，把这个能力带到 MySQL 模块中去——数据库的世界有同样精彩的挑战等着你！🚀
